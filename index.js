@@ -29,13 +29,20 @@ for (let i = 0; i < (opts.room || 1); i++) {
 }
 
 //开启服务器
-app.use('/static', express.static(__dirname + 'static'))
+app.use(express.static( 'static'))
 server.listen(opts.port || 80, () => {
     console.log('Listening on port ' + server.address().port)
 })
 //游戏地址
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/static/index.html')
+    //res.sendFile(__dirname + '/static/index.html')
 })
 
 //socket
+io.on('connect',(client)=>{
+    console.log('connection established')
+
+    client.on('join', function(data) {
+        console.log(data);
+    });
+})
