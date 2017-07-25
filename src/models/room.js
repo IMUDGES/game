@@ -21,8 +21,9 @@ class Room {
     getRoomData() {
         let rData = {}
         rData.id = this.id
-        rData.user = this.game.users || 0
+        rData.users = this.game.users || 0
         rData.type = this.type
+        rData.presist=this.presist
         return rData
     }
 
