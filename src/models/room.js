@@ -1,13 +1,13 @@
 "use strict"
-let Rooms = require('./rooms')
+let Rooms = require('./rooms'),
+    uuid=require('uuid/v4')
 
 class Room {
     //创建房间
     constructor(type, presist) {
         this.type = type
         this.presist = presist
-        global.roomID++
-        this.id = global.roomID
+        this.id = uuid().toString()
         this.game = {}
 
         //配置

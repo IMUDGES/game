@@ -1,7 +1,5 @@
 "use strict"
 let Room = require('./room')
-//全局变量 roomID
-global.roomID = 0
 
 
 class Rooms {
