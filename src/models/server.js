@@ -2,7 +2,7 @@
 let Room = require('./room')
 
 
-class Rooms {
+class Server {
     //构造函数
     constructor() {
         this.rooms = []
@@ -46,15 +46,34 @@ class Rooms {
 
     findRoom(ID) {
         for (let i = 0; i < this.roomsNumber; i++) {
-            if (this.rooms[i].getRoomData().id == ID) {
+            if (this.rooms[i].getRoomID() == ID) {
                 return this.rooms[i]
             }
         }
         return null
     }
 
-}
-let rooms = new Rooms()
-rooms.cleanFreeRooms()
+    getDefaultRoomID() {
 
-module.exports = rooms
+        if (this.rooms.length > 0) {
+            return this.rooms[0].getRoomID()
+        }
+
+        else return 0
+    }
+
+    //客户端连接
+    connect(client){
+        console.log('connection established. ip: '+client.handshake.address)
+
+        let roomID=client.handshake.query.roomID||this.getDefaultRoomID()
+        let room=this.findRoom(roomID)
+
+        room.addClient(client)
+    }
+
+}
+let server = new Server()
+server.cleanFreeRooms()
+
+module.exports = server

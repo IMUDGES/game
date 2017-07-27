@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/jquery.min.js"></script>
     <script src="js/socket.io.js"></script>
     <script src="js/socket.js"></script>
 
 </head>
 <body>
 <h1>Hello World!</h1>
-<form id="form" id="chat_form">
+<form id="form" >
     <input id="chat_input" type="text">
-    <input type="submit" value="Send">
+    <button type="button" onclick="test()">Send</button>
 </form>
+<script>
+    document.addEventListener('keydown',function (e) {
+        socket.emit('join',e.keyCode)
+    })
+</script>
 </body>
 </html>
