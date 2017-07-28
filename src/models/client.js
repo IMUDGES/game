@@ -28,9 +28,19 @@ class Client{
 
         //加入
         this.socket.on('join',(data)=>{
-            console.log('join '+data)
+            console.log('join '+data+' '+this.socket.id)
+            this.socket.emit('finsh','msg')
         })
 
+    }
+
+    //获取id
+    getID(){
+        return this.socket.id
+    }
+
+    getSocket(){
+        return this.socket
     }
 }
 

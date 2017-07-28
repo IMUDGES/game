@@ -12,5 +12,5 @@ socket.on('back',(data)=>{
 })
 
 function test() {
-    socket.emit('test','sdsd')
+    socket.emit('join','sdsd')
 }
