@@ -13,6 +13,7 @@ class Room {
 
         //配置
         this.maxUser = 10
+        this.map
     }
 
     setConfig(code) {
@@ -29,12 +30,14 @@ class Room {
 
         let client = new Client(socket)
 
+        console.log(client.getID()+' 加入了房间 '+this.getRoomID())
+        console.log(this.getRoomData())
         this.clients.push(client)
 
     }
 
     //获取玩家socket
-    findClientSocket(client){
+    findClient(client){
         for (let i in this.clients){
             if (this.clients[i].getID()==client.id){
                 return this.clients[i].socket
@@ -44,7 +47,11 @@ class Room {
 
     //删除玩家
     removeClient(client) {
-       console.log(1)
+       for(let i in this.clients){
+           if (this.clients[i].getID()==client.id){
+               this.clients.splice(i, 1)
+           }
+       }
     }
 
     //获取本房间信息

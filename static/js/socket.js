@@ -4,7 +4,13 @@
 const socket=io.connect('http://183.175.12.157')
 
 socket.on('connect',()=>{
-    socket.emit('join','Hello World from client')
+    socket.on('rooms',(data)=>{
+        console.log(data)
+        socket.emit('join',{
+            roomID:data[0].ID
+        })
+
+    })
 })
 
 socket.on('back',(data)=>{

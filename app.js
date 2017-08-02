@@ -41,7 +41,6 @@ app.get('/', (req, res) => {
 
 //socket
 io.on('connect', (client) => {
-
     server.connect(client)
-
 })
+

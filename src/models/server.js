@@ -1,6 +1,6 @@
 "use strict"
 let Room = require('./room')
-//let console=require('tracer').console()
+let console=require('tracer').console()
 
 class Server {
     //构造函数
@@ -71,18 +71,27 @@ class Server {
     connect(client){
         console.log('connection established. ip: '+client.conn.remoteAddress)
 
-        let roomID=client.handshake.query.roomID||this.getDefaultRoomID()
-        let room=this.findRoom(roomID)
-
-        room.addClient(client)
+        //向客户端返回房间信息
+        client.emit('rooms',this.getRoomData())
+        // let roomID=client.handshake.query.roomID||this.getDefaultRoomID()
+        // let room=this.findRoom(roomID)
+        // room.addClient(client)
         //room.removeClient(client)
-        setTimeout(()=>{
-            console.log(this.getRoomData())
-        },500)
+        // setTimeout(()=>{
+        //     console.log(this.getRoomData())
+        // },500)
 
-        client.on('close',()=>{
-            console.log('客户端断开连接')
-            room.removeClient(client)
+        //加入游戏事件
+        client.on('join',(data)=>{
+             let roomID=client.handshake.query.roomID||data.roomID||this.getDefaultRoomID()
+             let room=this.findRoom(roomID)
+
+            room.addClient(client)
+
+            client.on('disconnect',()=>{
+                console.log('客户端断开连接')
+                room.removeClient(client)
+            })
         })
     }
 
