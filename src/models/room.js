@@ -31,8 +31,8 @@ class Room {
         let client = new Client(socket)
 
         console.log(client.getID()+' 加入了房间 '+this.getRoomID())
-        console.log(this.getRoomData())
         this.clients.push(client)
+        console.log(this.getRoomData())
 
     }
 

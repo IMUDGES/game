@@ -83,6 +83,9 @@ class Server {
 
         //加入游戏事件
         client.on('join',(data)=>{
+            if (!data){
+                data={}
+            }
              let roomID=client.handshake.query.roomID||data.roomID||this.getDefaultRoomID()
              let room=this.findRoom(roomID)
 

@@ -25,6 +25,9 @@ class Client {
 
         //初始化
         this.socket.on('init',(data)=>{
+            if (!data){
+                data={}
+            }
             this.characterID = data.characterID || 1
             this.setCharacter(this.characterID)
         })
