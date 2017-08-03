@@ -1,6 +1,6 @@
 "use strict"
 let Room = require('./room')
-let console=require('tracer').console()
+let console = require('tracer').console()
 
 class Server {
     //构造函数
@@ -40,7 +40,7 @@ class Server {
 
     //获取所有房间信息
     getRoomData() {
-        let roomsData=[]
+        let roomsData = []
         for (let room of this.rooms) {
             roomsData.push(room.getRoomData())
         }
@@ -68,11 +68,11 @@ class Server {
     }
 
     //客户端连接
-    connect(client){
-        console.log('connection established. ip: '+client.conn.remoteAddress)
+    connect(client) {
+        console.log('connection established. ip: ' + client.conn.remoteAddress)
 
         //向客户端返回房间信息
-        client.emit('rooms',this.getRoomData())
+        client.emit('rooms', this.getRoomData())
         // let roomID=client.handshake.query.roomID||this.getDefaultRoomID()
         // let room=this.findRoom(roomID)
         // room.addClient(client)
@@ -82,24 +82,44 @@ class Server {
         // },500)
 
         //加入游戏事件
-        client.on('join',(data)=>{
-            if (!data){
-                data={}
+        client.on('join', (data) => {
+            if (!data) {
+                data = {}
             }
-             let roomID=client.handshake.query.roomID||data.roomID||this.getDefaultRoomID()
-             let room=this.findRoom(roomID)
+            let roomID = client.handshake.query.roomID || data.roomID || this.getDefaultRoomID()
+            let room = this.findRoom(roomID)
 
             room.addClient(client)
 
-            client.on('disconnect',()=>{
+            client.on('disconnect', () => {
                 console.log('客户端断开连接')
                 room.removeClient(client)
             })
         })
     }
 
+    emitPlayersData() {
+        setInterval(() => {
+            for (let i in this.rooms) {
+                let room = this.rooms[i]
+                let clients = room.clients,
+                    playerData = room.getPlayersData()
+
+                for (let k in clients) {
+                    let client = clients[k],
+                        socket = client.getSocket()
+                    socket.emit('playersData', playerData)
+                }
+
+            }
+        }, 1000)
+    }
+
 }
 let server = new Server()
+//定时任务：回收空闲房间和像所有客户端发送信息
 server.cleanFreeRooms()
+server.emitPlayersData()
+
 
 module.exports = server

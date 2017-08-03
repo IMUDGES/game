@@ -1,7 +1,7 @@
 "use strict"
-let Gunfighter=require('./Gunfighter')
-let Saber=require('./Saber')
-let console=require('tracer').console()
+let Gunfighter = require('./Gunfighter')
+let Saber = require('./Saber')
+let console = require('tracer').console()
 
 //再封装客户端的socket
 class Client {
@@ -22,11 +22,10 @@ class Client {
         this._character = null
 
 
-
         //初始化
-        this.socket.on('init',(data)=>{
-            if (!data){
-                data={}
+        this.socket.on('init', (data) => {
+            if (!data) {
+                data = {}
             }
             this.characterID = data.characterID || 1
             this.setCharacter(this.characterID)
@@ -44,21 +43,31 @@ class Client {
     }
 
     setCharacter(value) {
-        switch (value){
+        switch (value) {
             case 1:
-                this._character=new Saber()
+                this._character = new Saber()
                 break
             case 2:
-                this._character=new Gunfighter()
+                this._character = new Gunfighter()
                 break
             default:
-                this.characterID=new Saber()
+                this._character = new Saber()
         }
-        console.log('创建了'+this._character.getTypeName())
+        console.log('创建了' + this._character.getTypeName())
     }
 
-    getCharacter(value) {
+    getCharacter() {
         return this._character
+    }
+
+    getPlayerData() {
+        if (this.getCharacter()) {
+            let ID = this.getID()
+            let data = {ID}
+            data.data = this.getCharacter().getMsg()
+            return data
+        }
+        return null
     }
 
 }

@@ -4,6 +4,7 @@ class Character {
         this._pointX = 0                             //坐标X
         this._pointY = 0                             //坐标Y
 
+
         //基本属性
         this._type = type || 0                        //角色类型
         this._typeName = ''                          //角色类型名
@@ -12,6 +13,7 @@ class Character {
         //this._speed = 10                             //移动速度
         //this._jumpHeight = 10                     //跳跃高度
 
+
         //当前状态
         this._jump = false                             //跳跃
         this._walk = false                             //行走
@@ -19,6 +21,14 @@ class Character {
         this._attack = false                          //攻击
         this._face = 'right'                           //朝向
         this._dead = false                              //是否已经死亡
+
+        /**键位
+         * 上下左右有长按效果*/
+        this._up=false
+        this._down=false
+        this._left=false
+        this._right=false
+
 
     }
 
@@ -61,7 +71,12 @@ class Character {
     getMsg() {
         return {
             "HP": this.getHP(),
-            "ATK": this.getATK()
+            "dead":this._dead,
+            // "ATK": this.getATK(),
+            //坐标
+            "pointX": this._pointX,
+            "pointY": this._pointY
+
         }
     }
 

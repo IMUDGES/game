@@ -41,6 +41,9 @@ app.get('/', (req, res) => {
 
 //socket
 io.on('connect', (client) => {
+    io.emit('finish',{
+        userID:client.id
+    })
     server.connect(client)
 })
 

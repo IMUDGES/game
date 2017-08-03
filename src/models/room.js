@@ -1,7 +1,8 @@
 "use strict"
 let Rooms = require('./server'),
     uuid = require('uuid/v4'),
-    Client = require('./client')
+    Client = require('./client'),
+    console=require('tracer').console()
 
 class Room {
     //创建房间
@@ -27,13 +28,10 @@ class Room {
             socket.emit('joinFail', '加入失败，服务器已满')
             return
         }
-
         let client = new Client(socket)
-
         console.log(client.getID()+' 加入了房间 '+this.getRoomID())
         this.clients.push(client)
         console.log(this.getRoomData())
-
     }
 
     //获取玩家socket
@@ -67,6 +65,18 @@ class Room {
     //获取本房间ID
     getRoomID() {
         return this.ID
+    }
+
+    //获取本房间所有玩家信息与操作
+    getPlayersData(){
+        let data=[]
+        for(let i in this.clients){
+            let playerData=this.clients[i].getPlayerData()
+            if (playerData){
+                data.push(playerData)
+            }
+        }
+        return data
     }
 
 }

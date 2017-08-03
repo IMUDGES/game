@@ -16,6 +16,10 @@ socket.on('back',(data)=>{
     console.log(data)
 })
 
+socket.on('playersData',(data)=>{
+    console.log(data)
+})
+
 function test() {
     socket.emit('join','sdsd')
 }
