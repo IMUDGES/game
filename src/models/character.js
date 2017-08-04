@@ -24,10 +24,7 @@ class Character {
 
         /**键位
          * 上下左右有长按效果*/
-        this._up=false
-        this._down=false
-        this._left=false
-        this._right=false
+
 
 
     }

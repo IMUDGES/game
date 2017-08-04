@@ -21,6 +21,21 @@ class Client {
         this.characterID = null
         this._character = null
 
+        //初始化控制包
+        this.controlPack = {
+            leftDown: false,
+            rightDown: false,
+            upDown: false,
+            downDown: false,
+            //itemDown: false,
+
+            leftPress: false,
+            rightPress: false,
+            upPress: false,
+            downPress: false,
+            //itemPress: false,
+        }
+
 
         //初始化
         this.socket.on('init', (data) => {
@@ -29,6 +44,9 @@ class Client {
             }
             this.characterID = data.characterID || 1
             this.setCharacter(this.characterID)
+        })
+        this.socket.on('ctrl',(data)=>{
+            this.controlPack=data.controlPack
         })
 
     }
@@ -64,6 +82,7 @@ class Client {
         if (this.getCharacter()) {
             let ID = this.getID()
             let data = {ID}
+            data.controlPack = this.controlPack
             data.data = this.getCharacter().getMsg()
             return data
         }
