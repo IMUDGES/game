@@ -6,6 +6,7 @@ class Gunfighter extends character {
     }
 
 
+
 }
 
 module.exports=Gunfighter

@@ -78,6 +78,7 @@ class Client {
         return this._character
     }
 
+
     getPlayerData() {
         if (this.getCharacter()) {
             let ID = this.getID()

@@ -29,6 +29,7 @@ for (let i = 0; i < (opts.room || 1); i++) {
     server.createRoom("大乱斗", true)
 }
 
+
 //开启服务器 ipv4模式
 app.use(express.static('static'))
 httpServer.listen(opts.port || 80,'0.0.0.0', () => {

@@ -2,6 +2,7 @@
 
 class Game{
 
+
 }
 
 let game

@@ -1,6 +1,7 @@
 class Character {
     constructor(type) {
         //起始位置
+
         this._pointX = 0                             //坐标X
         this._pointY = 0                             //坐标Y
 

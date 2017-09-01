@@ -1,5 +1,6 @@
 "use strict"
 
+
 //socket地址 填127.0.0.1则其他设备无法使用socket
 const socket=io.connect('http://183.175.12.157')
 

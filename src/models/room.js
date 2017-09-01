@@ -24,6 +24,7 @@ class Room {
     //添加玩家
     addClient(socket) {
 
+
         if (this.clients.length >= this.maxUser) {
             socket.emit('joinFail', '加入失败，服务器已满')
             return
